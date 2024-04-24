@@ -1,10 +1,31 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { Module } from "@nestjs/common";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { typeOrmAsyncConfig } from "./config/typeorm.config";
+import { ConfigModule } from "@nestjs/config";
+import * as Joi from "joi";
+import { TokenModule } from "./token/token.module";
+import { UserModule } from "./user/user.module";
+import { AppGateway } from "./app.gateway";
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+    imports: [
+        ConfigModule.forRoot({
+            validationSchema: Joi.object({
+                PORT: Joi.number().required().default(5000),
+                DB_HOST: Joi.string().required(),
+                DB_PORT: Joi.number().required().default(5432),
+                DB_USERNAME: Joi.string().required().default("postgres"),
+                DB_PASSWORD: Joi.string().required(),
+                DB_DATABASE_NAME: Joi.string().required().default("postgres"),
+                SECRET: Joi.string().required().min(10),
+                JWT_EXPIRES_IN: Joi.string().required().default("5m"),
+            }),
+            isGlobal: true,
+        }),
+        TypeOrmModule.forRootAsync(typeOrmAsyncConfig),
+        TokenModule,
+        UserModule,
+        AppGateway,
+    ],
 })
 export class AppModule {}
