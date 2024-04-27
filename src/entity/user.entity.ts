@@ -1,8 +1,9 @@
-import { Column, JoinTable, ManyToMany } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany } from "typeorm";
 import { AbstractEntity } from "./abstract.entity";
 import { EUserStatus } from "../enum/user-status.enum";
 import { ChatEntity } from "./chat.entity";
 
+@Entity("user")
 export class UserEntity extends AbstractEntity {
     @Column()
     username: string;
@@ -19,7 +20,7 @@ export class UserEntity extends AbstractEntity {
     @Column()
     email: string;
 
-    @Column("enum")
+    @Column("enum", { enum: EUserStatus })
     status: EUserStatus;
 
     @Column()

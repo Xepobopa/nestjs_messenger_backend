@@ -4,6 +4,7 @@ import { UserEntity } from "src/entity/user.entity";
 import { Repository } from "typeorm";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { EUserStatus } from "src/enum/user-status.enum";
+import { hash } from "bcrypt";
 
 @Injectable()
 export class UserService {
@@ -13,10 +14,12 @@ export class UserService {
     ) {}
 
     public async create(user: CreateUserDto) {
+        console.log("User => ", user);
         return await this.userRepository.save({
             ...user,
             is_activated: false,
             status: EUserStatus.OFFLINE,
+            password: await hash(user.password, 10),
         });
     }
 

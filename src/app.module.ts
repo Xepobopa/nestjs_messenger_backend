@@ -6,6 +6,8 @@ import * as Joi from "joi";
 import { TokenModule } from "./token/token.module";
 import { UserModule } from "./user/user.module";
 import { AppGateway } from "./app.gateway";
+import { AuthorizationModule } from "./auth/authorization.module";
+import { FilesUploadS3Module } from "./files-upload-s3/files-upload-s3.module";
 
 @Module({
     imports: [
@@ -23,6 +25,8 @@ import { AppGateway } from "./app.gateway";
             isGlobal: true,
         }),
         TypeOrmModule.forRootAsync(typeOrmAsyncConfig),
+        FilesUploadS3Module,
+        AuthorizationModule,
         TokenModule,
         UserModule,
         AppGateway,

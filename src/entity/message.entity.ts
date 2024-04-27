@@ -1,8 +1,9 @@
-import { Column, JoinColumn, ManyToOne } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 import { AbstractEntity } from "./abstract.entity";
 import { UserEntity } from "./user.entity";
 import { ChatEntity } from "./chat.entity";
 
+@Entity("message")
 export class MessageEntity extends AbstractEntity {
     @Column()
     public text: string;

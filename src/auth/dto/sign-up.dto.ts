@@ -1,5 +1,6 @@
 import {
     IsEmail,
+    IsOptional,
     IsPhoneNumber,
     IsString,
     IsStrongPassword,
@@ -18,6 +19,7 @@ export class SignUpDto {
 
     @IsString()
     @IsUrl()
+    @IsOptional()
     public profile_url: string;
 
     @IsString()

@@ -13,6 +13,7 @@ export class AuthorizationService {
     ) {}
 
     public async signUp(signUpDto: SignUpDto) {
+        console.log("Sign up with data: ", signUpDto);
         const newUser = this.userService.create(signUpDto);
         // this.mailerService.sendConfirmationEmail(newUser);
         return newUser;
