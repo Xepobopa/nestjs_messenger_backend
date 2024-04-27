@@ -97,8 +97,8 @@ export class AuthorizationController {
 
     private setTokenCookie(token: string, res: Response) {
         return res.cookie(this.cookieName, token, {
-            secure: true,
-            httpOnly: true,
+            // secure: true,
+            // httpOnly: true,
         });
     }
 
