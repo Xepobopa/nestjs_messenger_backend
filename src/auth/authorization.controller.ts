@@ -5,19 +5,18 @@ import {
     NestInterceptor,
     ParseFilePipeBuilder,
     Post,
-    Res,
     UnauthorizedException,
     UploadedFile,
     UseInterceptors,
 } from "@nestjs/common";
 import { isUndefined } from "@nestjs/common/utils/shared.utils";
+import { FileInterceptor } from "@nestjs/platform-express";
 import { Request, Response } from "express";
+import { FilesUploadS3Service } from "src/files-upload-s3/files-upload-s3.service";
+import { v4 } from "uuid";
 import { AuthorizationService } from "./authorization.service";
 import { SignInDto } from "./dto/sign-in.dto";
 import { SignUpDto } from "./dto/sign-up.dto";
-import { FileInterceptor } from "@nestjs/platform-express";
-import { FilesUploadS3Service } from "src/files-upload-s3/files-upload-s3.service";
-import { v4 } from "uuid";
 
 @Controller("auth")
 export class AuthorizationController {
@@ -57,15 +56,14 @@ export class AuthorizationController {
     }
 
     @Post("/sign-in")
-    public async signIn(@Body() singInDto: SignInDto, @Res() res: Response) {
-        console.log("[INFO] SignIn!");
-        const result = await this.authorizationService.signIn(singInDto);
+    public async signIn(@Body() singInDto: SignInDto) {
+        return await this.authorizationService.signIn(singInDto);
 
-        this.setTokenCookie(result.token, res)
-            .status(HttpStatus.OK)
-            .send({ user: result.user });
+        // this.setTokenCookie(result.token, res)
+        //     .status(HttpStatus.OK)
+        //     .send({ user: result.user });
 
-        console.log({ token: result.token });
+        // console.log({ token: result.token });
     }
 
     // @Post("/refreshToken")
