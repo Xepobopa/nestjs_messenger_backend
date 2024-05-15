@@ -15,7 +15,4 @@ export class MessageEntity extends AbstractEntity {
     @ManyToOne(() => ChatEntity, (chat) => chat.id)
     @JoinColumn({ name: "chat_id" })
     public chat: ChatEntity;
-
-    @Column("timestamp")
-    public edit_date: Date;
 }

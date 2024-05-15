@@ -8,6 +8,8 @@ import { UserModule } from "./user/user.module";
 import { AppGateway } from "./app.gateway";
 import { AuthorizationModule } from "./auth/authorization.module";
 import { FilesUploadS3Module } from "./files-upload-s3/files-upload-s3.module";
+import { MessagesModule } from "./messages/messages.module";
+import { ChatModule } from "./chat/chat.module";
 
 @Module({
     imports: [
@@ -30,6 +32,8 @@ import { FilesUploadS3Module } from "./files-upload-s3/files-upload-s3.module";
         TokenModule,
         UserModule,
         AppGateway,
+        MessagesModule,
+        ChatModule,
     ],
 })
 export class AppModule {}

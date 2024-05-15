@@ -27,6 +27,10 @@ export class UserService {
         return await this.userRepository.findOneByOrFail({ uuid: userUuid });
     }
 
+    public async findOneNoError(userUuid: string) {
+        return await this.userRepository.findOneBy({ uuid: userUuid });
+    }
+
     public async findOneByUserName(username: string) {
         return await this.userRepository.findOneByOrFail({ username });
     }

@@ -18,6 +18,6 @@ export class ChatEntity extends AbstractEntity {
     @ManyToMany(() => UserEntity, (user) => user.chats)
     members: UserEntity[];
 
-    @OneToOne(() => MessageEntity)
+    @OneToOne(() => MessageEntity, { nullable: true })
     last_message: MessageEntity;
 }
