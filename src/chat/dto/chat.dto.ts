@@ -12,6 +12,7 @@ import { MessageDto } from "src/messages/dto/message.dto";
 import { UserDto } from "src/user/dto/user.dto";
 
 export class ChatDto extends AbstractDto {
+    @IsString()
     public title: string;
 
     @IsEnum(EChatTypes)

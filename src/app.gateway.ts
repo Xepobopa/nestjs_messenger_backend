@@ -29,15 +29,17 @@ export class AppGateway
         console.log("Socket connection init!");
     }
 
-    handleConnection(client: Socket, ...args: any[]) {
+    handleConnection(client: Socket) {
         const { sockets } = this.io.sockets;
 
-        console.log("Args: ", args);
         console.log(`Client (${client.id}) connected!`);
         console.log("Number of connected clients: ", sockets.size);
     }
 
     handleDisconnect(client: Socket) {
+        const { sockets } = this.io.sockets;
+
         console.log(`Client ${client.id} disconnected!`);
+        console.log("Number of connected clients: ", sockets.size);
     }
 }

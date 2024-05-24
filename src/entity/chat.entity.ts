@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToMany, OneToOne } from "typeorm";
-import { AbstractEntity } from "./abstract.entity";
 import { EChatTypes } from "../enum/chat-types.enum";
+import { AbstractEntity } from "./abstract.entity";
 import { MessageEntity } from "./message.entity";
 import { UserEntity } from "./user.entity";
 

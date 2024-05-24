@@ -5,10 +5,12 @@ import { ConfigService } from "@nestjs/config";
 import * as cookieParser from "cookie-parser";
 
 async function bootstrap() {
-    const app = await NestFactory.create(AppModule);
+    const app = await NestFactory.create(AppModule, {
+        cors: { credentials: true, origin: "*" },
+    });
     const config = app.get<ConfigService>(ConfigService);
 
-    app.enableCors({ credentials: true, origin: true });
+    // app.enableCors({ credentials: true, origin: true });
     app.use(cookieParser(config.get<string>("COOKIE_SECRET")));
     app.useGlobalPipes(new ValidationPipe());
 

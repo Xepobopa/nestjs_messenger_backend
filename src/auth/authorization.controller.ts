@@ -57,7 +57,11 @@ export class AuthorizationController {
 
     @Post("/sign-in")
     public async signIn(@Body() singInDto: SignInDto) {
-        return await this.authorizationService.signIn(singInDto);
+        console.log("Sign in with data: ", singInDto);
+        const res = await this.authorizationService.signIn(singInDto);
+
+        console.log(res);
+        return res;
 
         // this.setTokenCookie(result.token, res)
         //     .status(HttpStatus.OK)

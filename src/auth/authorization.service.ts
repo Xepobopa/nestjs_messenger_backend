@@ -23,10 +23,7 @@ export class AuthorizationService {
         const user = await this.userService.findOneByUserName(signIn.username);
 
         if (!(await compare(signIn.password, user.password))) {
-            throw new BadRequestException("Password is wrong!", {
-                cause: "Password is wrong!",
-                description: "Password is wrong!",
-            });
+            throw new BadRequestException("Password is wrong!");
         }
 
         const token = this.tokenService.generateToken({ ...user });

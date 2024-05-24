@@ -16,6 +16,17 @@ import { JoinDto } from "./dto/join.dto";
 // Its also very useful for sending events to all online users.
 // Its also very useful for getting userUUID not from params, but from socketToUser array.
 
+@WebSocketGateway({
+    cors: {
+        origin: "*",
+        methods: "*",
+        allowedHeaders: "*",
+        credentials: true,
+        exposedHeaders: "*",
+    },
+    allowEIO3: true,
+    allowUpgrades: true,
+})
 @WebSocketGateway()
 export class ChatGateway {
     constructor(private readonly chatService: ChatService) {}
@@ -23,6 +34,22 @@ export class ChatGateway {
     @SubscribeMessage("createChat")
     create(@MessageBody() createChatDto: CreateChatDto) {
         return this.chatService.create(createChatDto);
+    }
+
+    @SubscribeMessage("findAllChats")
+    async findAll() {
+        const res = await this.chatService.findAll();
+        console.log("res => ", res);
+
+        return res;
+    }
+
+    @SubscribeMessage("createTest2UsersAndChat")
+    async test() {
+        const res = await this.chatService.test();
+        console.log("res => ", res);
+
+        return res;
     }
 
     /**

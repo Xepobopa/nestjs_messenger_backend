@@ -44,8 +44,12 @@ export class MessagesGateway {
     }
 
     @SubscribeMessage("findAllMessages")
-    findAll() {
-        return this.messagesService.findAll();
+    async findAll() {
+        // TODO: implement finding messages by user_id
+        const res = await this.messagesService.findAll();
+        console.log("res => ", res);
+
+        return res;
     }
 
     @SubscribeMessage("typing")
@@ -55,11 +59,9 @@ export class MessagesGateway {
         // 2. Also create users array ({ userUid: string, chatUId: string }).
         // 3. Next we should pass smth like curentChatUid to typing event.
         // 4. Thus we can get current online users (sockets) from clients array (by currentChatUid) and send typing event to them.
-
         // Idea #2:
         // 1. When user typing, he use "typing" event to send it to current chat.
         // 2. Other users that are online in current chat should get this event.
-
         // Other Idea
         // Create a function sendToChat that will send event to all online users in chat by finding clients by currentChatId.
     }

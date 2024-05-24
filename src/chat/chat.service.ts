@@ -16,20 +16,67 @@ export class ChatService {
         private readonly userService: UserService
     ) {}
 
-    create(createChatDto: CreateChatDto) {
-        let users: Array<UserEntity>;
+    async create(createChatDto: CreateChatDto) {
+        const users: Array<UserEntity> = [];
         createChatDto.members.forEach(async (member) => {
             const user = await this.userService.findOneNoError(member);
             if (!user) throw new WsException("Provided user member not found");
             users.push(user);
         });
 
-        const chat = this.chatRepository.create({
+        // const chat = this.chatRepository.create({
+        //     ...createChatDto,
+        //     members: users,
+        // });
+
+        // const chatRes = await this.chatRepository.save(chat);
+
+        console.log("members: ", users);
+
+        return await this.chatRepository.save({
             ...createChatDto,
             members: users,
         });
+    }
 
-        return chat;
+    async test() {
+        // Create user #1
+        const user1 = this.userService.createEntity({
+            email: "test@gmail.com",
+            password: "xL6Q699gx*",
+            phone: "+380972342758",
+            profile_url:
+                "https://media.newyorker.com/photos/59095bb86552fa0be682d9d0/master/pass/Monkey-Selfie.jpg",
+            real_name: "Dima Ivanov",
+            username: "Xepobopa",
+        });
+        await this.userService.save(user1);
+
+        // Create user #1
+        const user2 = this.userService.createEntity({
+            email: "test@gmail.com",
+            password: "xL6Q699gx*",
+            phone: "+380972342758",
+            profile_url:
+                "https://media.newyorker.com/photos/59095bb86552fa0be682d9d0/master/pass/Monkey-Selfie.jpg",
+            real_name: "Nikita Nazarenko",
+            username: "Real Sigma",
+        });
+        await this.userService.save(user2);
+
+        // Create chat
+        const chat = this.chatRepository.create({
+            members: [user1, user2],
+            photo_url:
+                "https://media.newyorker.com/photos/59095bb86552fa0be682d9d0/master/pass/Monkey-Selfie.jpg",
+            title: "Dima-Nikita chat",
+            type: EChatTypes.PRIVATE,
+        });
+        return await this.chatRepository.save(chat);
+    }
+
+    async findAll() {
+        return await this.chatRepository.find({ relations: ["members"] });
     }
 
     async join(chatUid: string, userUid: string) {
